@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { ChartPanel } from "./components/ChartPanel";
+import { ParamsPanel } from "./components/ParamsPanel";
+import { parameters } from "./constants";
+import { useImmer } from "use-immer";
+import { useData } from "./hooks/useData";
+import { CostFunctionParameters } from "./utils/costFunction";
 
-function App() {
+export const App = () => {
+  const initialState = parameters.reduce<{
+    [key: string]: number;
+  }>((result, curr) => {
+    result[curr.paramName] = curr.defaultValue;
+    return result;
+  }, {});
+
+  const [paramsValue, setParamsValue] = useImmer(initialState);
+
+  const onChangeParameter = (parameterName: string, value: number) => {
+    setParamsValue((draft) => {
+      draft[parameterName] = value;
+    });
+  };
+
+  const data = useData(
+    (paramsValue as unknown) as CostFunctionParameters,
+    10000
+  );
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <ParamsPanel onChangeParameter={onChangeParameter} />
+      <ChartPanel data={data} />
     </div>
   );
-}
-
-export default App;
+};
