@@ -23,12 +23,14 @@ export const App = () => {
     });
   };
 
-  const data = useData((paramsValue as unknown) as FunctionParameters, 10000);
+  const dataFirstChart = useData((paramsValue as unknown) as FunctionParameters, 20000, {cost:true,income:true,expenses:true});
+  const dataSecondChart = useData((paramsValue as unknown) as FunctionParameters, 20000, {income:true,expenses:true}, true);
 
   return (
     <Container>
       <ParamsPanel onChangeParameter={onChangeParameter} />
-      <ChartPanel data={data} />
+      <ChartPanel data={dataFirstChart} />
+      <ChartPanel data={dataSecondChart} />
     </Container>
   );
 };

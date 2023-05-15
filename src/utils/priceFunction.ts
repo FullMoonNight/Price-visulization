@@ -16,6 +16,7 @@ export interface FunctionParameters {
   conversion: number;
   ourSale: number;
   upDelivery: number;
+  marketing: number;
 }
 
 export const costFunction = (params: FunctionParameters) => {
@@ -34,6 +35,7 @@ export const costFunction = (params: FunctionParameters) => {
     acquireSale,
 
     conversion,
+    marketing,
   } = params;
 
   const productPriceWithSale = productPrice * (1 - acquireSale);
@@ -43,7 +45,7 @@ export const costFunction = (params: FunctionParameters) => {
         (warehouseSpace * warehouseSpaceCost * distanceFromCity) / m +
         (2+conversion) * deliveryCostAvg * deliveryPercent +
         productPriceWithSale / (12 * periodValuableUsage) +
-        productPriceWithSale * wearTearMulti * stealProbability) *
+        productPriceWithSale * wearTearMulti * stealProbability+marketing) *
       (overheadCosts + 1)
     );
   };
@@ -69,6 +71,7 @@ export const incomeFunction = (params: FunctionParameters) => {
     conversion,
     ourSale,
     upDelivery,
+    marketing,
   } = params;
   return (m: number) => {
     const productPriceWithSale = productPrice * (1 - acquireSale);
@@ -77,7 +80,7 @@ export const incomeFunction = (params: FunctionParameters) => {
     (warehouseSpace * warehouseSpaceCost * distanceFromCity) / m +
     (2+conversion) * deliveryCostAvg * deliveryPercent +
     productPriceWithSale / (12 * periodValuableUsage) +
-    productPriceWithSale * wearTearMulti * stealProbability) *
+    productPriceWithSale * wearTearMulti * stealProbability+marketing) *
     (overheadCosts + 1) )
     return (
        (f * (1+
@@ -109,6 +112,7 @@ export const clientFunction = (params: FunctionParameters) => {
     conversion,
     ourSale,
     upDelivery,
+    marketing,
   } = params;
   return (m: number) => {
     const productPriceWithSale = productPrice * (1 - acquireSale);
@@ -117,7 +121,7 @@ export const clientFunction = (params: FunctionParameters) => {
     (warehouseSpace * warehouseSpaceCost * distanceFromCity) / m +
     (2+conversion) * deliveryCostAvg * deliveryPercent +
     productPriceWithSale / (12 * periodValuableUsage) +
-    productPriceWithSale * wearTearMulti * stealProbability) *
+    productPriceWithSale * wearTearMulti * stealProbability+marketing) *
     (overheadCosts + 1) )
     return (
        (f * (1+

@@ -128,4 +128,11 @@ export const parameters: ParameterObject[] = [
     defaultValue: 0.1,
     step: 0.01,
   },
+  {
+    paramName: "marketing",
+    label: "Расход на маркетинг",
+    range: [0, 1000],
+    defaultValue: 135,
+    step: 1,
+  },
 ];
