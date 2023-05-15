@@ -4,7 +4,8 @@ import { ParamsPanel } from "./components/ParamsPanel";
 import { parameters } from "./constants";
 import { useImmer } from "use-immer";
 import { useData } from "./hooks/useData";
-import { CostFunctionParameters } from "./utils/costFunction";
+import { FunctionParameters } from "./utils/priceFunction";
+import { Container } from "@mui/material";
 
 export const App = () => {
   const initialState = parameters.reduce<{
@@ -22,14 +23,12 @@ export const App = () => {
     });
   };
 
-  const data = useData(
-    (paramsValue as unknown) as CostFunctionParameters,
-    10000
-  );
+  const data = useData((paramsValue as unknown) as FunctionParameters, 10000);
+
   return (
-    <div>
+    <Container>
       <ParamsPanel onChangeParameter={onChangeParameter} />
       <ChartPanel data={data} />
-    </div>
+    </Container>
   );
 };

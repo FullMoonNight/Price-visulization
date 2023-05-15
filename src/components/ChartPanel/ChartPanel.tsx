@@ -7,6 +7,8 @@ import {
   PointElement,
   LineElement,
   LogarithmicScale,
+  Legend,
+  Tooltip,
 } from "chart.js";
 
 Chart.register(
@@ -14,7 +16,9 @@ Chart.register(
   LinearScale,
   PointElement,
   LineElement,
-  LogarithmicScale
+  LogarithmicScale,
+  Legend,
+  Tooltip
 );
 
 interface ChartPanelProps {
