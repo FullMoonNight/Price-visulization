@@ -10,6 +10,7 @@ import {
   Legend,
   Tooltip,
 } from "chart.js";
+import "chartjs-plugin-zoom";
 
 Chart.register(
   CategoryScale,
@@ -32,6 +33,15 @@ export const ChartPanel: FC<ChartPanelProps> = (props) => {
     <Line
       data={data}
       options={{
+        // zoom: {
+        //   enabled: true,
+        //   mode: "x",
+        // },
+        // pan: {
+        //   enabled: true,
+        //   mode: "x",
+        // },
+
         scales: {
           x: {
             type: "logarithmic",

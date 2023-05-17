@@ -5,7 +5,7 @@ import { parameters } from "./constants";
 import { useImmer } from "use-immer";
 import { useData } from "./hooks/useData";
 import { FunctionParameters } from "./utils/priceFunction";
-import { Container } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 
 export const App = () => {
   const initialState = parameters.reduce<{
@@ -23,14 +23,47 @@ export const App = () => {
     });
   };
 
-  const dataFirstChart = useData((paramsValue as unknown) as FunctionParameters, 20000, {cost:true,income:true,expenses:true});
-  const dataSecondChart = useData((paramsValue as unknown) as FunctionParameters, 20000, {income:true,expenses:true}, true);
+  const dataFirstChart = useData(
+    (paramsValue as unknown) as FunctionParameters,
+    20000,
+    { fixed: true, total: true, variable: true }
+  );
+  const dataSecondChart = useData(
+    (paramsValue as unknown) as FunctionParameters,
+    20000,
+    { fixed: true, total: true, variable: true },
+    true
+  );
+  const dataThirdChart = useData(
+    (paramsValue as unknown) as FunctionParameters,
+    20000,
+    { income: true, total: true },
+    true
+  );
+  const dataFourthChart = useData(
+    (paramsValue as unknown) as FunctionParameters,
+    20000,
+    { profit: true },
+    true
+  );
 
   return (
     <Container>
       <ParamsPanel onChangeParameter={onChangeParameter} />
-      <ChartPanel data={dataFirstChart} />
-      <ChartPanel data={dataSecondChart} />
+      <Grid container>
+        <Grid item xs={6}>
+          <ChartPanel data={dataFirstChart} />
+        </Grid>
+        <Grid item xs={6}>
+          <ChartPanel data={dataSecondChart} />
+        </Grid>
+        <Grid item xs={6}>
+          <ChartPanel data={dataThirdChart} />
+        </Grid>
+        <Grid item xs={6}>
+          <ChartPanel data={dataFourthChart} />
+        </Grid>
+      </Grid>
     </Container>
   );
 };
