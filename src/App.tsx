@@ -47,6 +47,13 @@ export const App = () => {
     true
   );
 
+  const dataPartnerChart = useData(
+    (paramsValue as unknown) as FunctionParameters,
+    20000,
+    { partner: true },
+    true
+  );
+
   return (
     <Container>
       <ParamsPanel onChangeParameter={onChangeParameter} />
@@ -62,6 +69,9 @@ export const App = () => {
         </Grid>
         <Grid item xs={6}>
           <ChartPanel data={dataFourthChart} />
+        </Grid>
+        <Grid item xs={6}>
+          <ChartPanel data={dataPartnerChart} />
         </Grid>
       </Grid>
     </Container>

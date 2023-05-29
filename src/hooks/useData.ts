@@ -8,6 +8,7 @@ import {
   totalCostsForOneDealFunction,
   profitFunction,
   incomeFunction,
+  partnerIncomeFunction,
 } from "../utils/priceFunction";
 import { createDataset } from "../utils/createChartDataset";
 
@@ -20,20 +21,22 @@ export const useData = (
     fixed?: boolean;
     profit?: boolean;
     income?: boolean;
+    partner?: boolean;
   } = {
     total: false,
     variable: false,
     fixed: false,
     profit: false,
     income: false,
+    partner: false,
   },
   forAll?: boolean
 ) => {
-  const minAsix = 100;
+  const minAsix = 1;
   const step = 10;
   const datasets = [];
   let labels: string[] = [];
-  const { total, fixed, profit, variable, income } = charts;
+  const { total, fixed, profit, variable, income, partner } = charts;
 
   if (fixed) {
     const foo = forAll
@@ -108,8 +111,8 @@ export const useData = (
     datasets.push({
       data: dataset,
       label: "profit",
-      backgroundColor: "yellow",
-      borderColor: "yellow",
+      backgroundColor: "#cc9aff",
+      borderColor: "#cc9aff",
     });
     labels = profitLabels;
   }
@@ -129,6 +132,25 @@ export const useData = (
       label: "income",
       backgroundColor: "purple",
       borderColor: "purple",
+    });
+    labels = profitLabels;
+  }
+
+  if (partner) {
+    const foo = partnerIncomeFunction(params);
+
+    const { dataset, labels: profitLabels } = createDataset(
+      foo,
+      axis,
+      step,
+      minAsix
+    );
+
+    datasets.push({
+      data: dataset,
+      label: "partner",
+      backgroundColor: "orange",
+      borderColor: "orange",
     });
     labels = profitLabels;
   }

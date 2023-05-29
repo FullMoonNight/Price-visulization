@@ -11,7 +11,6 @@ export interface FunctionParameters {
   stealProbability: number;
   overheadCosts: number;
   acquireSale: number;
-  upTestDrive: number;
   prtTestDrive: number;
   conversion: number;
   ourSale: number;
@@ -21,56 +20,15 @@ export interface FunctionParameters {
   averageCost: number;
 }
 
-// export const costFunction = (params: FunctionParameters) => {
-//   const {
-//     avgSalary,
-//     warehouseSpace,
-//     warehouseSpaceCost,
-//     distanceFromCity,
-//     deliveryCostAvg,
-//     deliveryPercent,
-//     productPrice,
-//     periodValuableUsage,
-//     wearTearMulti,
-//     stealProbability,
-//     overheadCosts,
-//     acquireSale,
-
-//     conversion,
-//     marketing,
-//   } = params;
-
-//   const productPriceWithSale = productPrice * (1 - acquireSale);
-//   return (m: number) => {
-//     return (
-//       ((1.404 * avgSalary * (7 + Math.floor(m / 100))) / m +
-//         (warehouseSpace * warehouseSpaceCost * distanceFromCity) / m +
-//         (2+conversion) * deliveryCostAvg * deliveryPercent +
-//         productPriceWithSale / (12 * periodValuableUsage) +
-//         productPriceWithSale * wearTearMulti * stealProbability+marketing) *
-//       (overheadCosts + 1)
-//     );
-//   };
-// };
-
 export const fixedCostsForOneDealFunction = (params: FunctionParameters) => {
   const {
     avgSalary,
     warehouseSpace,
     warehouseSpaceCost,
     distanceFromCity,
-    deliveryCostAvg,
-    deliveryPercent,
-    productPrice,
-    periodValuableUsage,
-    wearTearMulti,
-    stealProbability,
     overheadCosts,
-    acquireSale,
 
-    conversion,
     marketing,
-    dealCntMonth,
   } = params;
 
   return (m: number) => {
@@ -89,53 +47,8 @@ export const fixedCostsFunction = (params: FunctionParameters) => {
   };
 };
 
-// export const incomeFunction = (params: FunctionParameters) => {
-//   const {
-//     avgSalary,
-//     warehouseSpace,
-//     warehouseSpaceCost,
-//     distanceFromCity,
-//     deliveryCostAvg,
-//     deliveryPercent,
-//     productPrice,
-//     periodValuableUsage,
-//     wearTearMulti,
-//     stealProbability,
-//     overheadCosts,
-//     acquireSale,
-
-//     upTestDrive,
-//     prtTestDrive,
-//     conversion,
-//     ourSale,
-//     upDelivery,
-//     marketing,
-//   } = params;
-//   return (m: number) => {
-//     const productPriceWithSale = productPrice * (1 - acquireSale);
-
-//     const f = (((1.404 * avgSalary * (7 + Math.floor(m / 100))) / m +
-//     (warehouseSpace * warehouseSpaceCost * distanceFromCity) / m +
-//     (2+conversion) * deliveryCostAvg * deliveryPercent +
-//     productPriceWithSale / (12 * periodValuableUsage) +
-//     productPriceWithSale * wearTearMulti * stealProbability+marketing) *
-//     (overheadCosts + 1) )
-//     return (
-//        (f * (1+
-//         upTestDrive*(1-prtTestDrive/100)) +
-//         (productPrice - f) * ourSale*conversion) +
-//         (deliveryPercent*deliveryCostAvg*upDelivery*(2+conversion))
-
-//     );
-//   };
-// };
-
 export const variableCostsForOneDealFunction = (params: FunctionParameters) => {
   const {
-    avgSalary,
-    warehouseSpace,
-    warehouseSpaceCost,
-    distanceFromCity,
     deliveryCostAvg,
     deliveryPercent,
     productPrice,
@@ -145,12 +58,7 @@ export const variableCostsForOneDealFunction = (params: FunctionParameters) => {
     overheadCosts,
     acquireSale,
 
-    upTestDrive,
-    prtTestDrive,
     conversion,
-    ourSale,
-    upDelivery,
-    marketing,
     dealCntMonth,
   } = params;
   return (m: number) => {
@@ -171,46 +79,6 @@ export const variableCostsFunction = (params: FunctionParameters) => {
     return variableCostsForOneDealFunction(params)(m) * m;
   };
 };
-
-// export const clientFunction = (params: FunctionParameters) => {
-//   const {
-//     avgSalary,
-//     warehouseSpace,
-//     warehouseSpaceCost,
-//     distanceFromCity,
-//     deliveryCostAvg,
-//     deliveryPercent,
-//     productPrice,
-//     periodValuableUsage,
-//     wearTearMulti,
-//     stealProbability,
-//     overheadCosts,
-//     acquireSale,
-
-//     upTestDrive,
-//     conversion,
-//     ourSale,
-//     upDelivery,
-//     marketing,
-//   } = params;
-//   return (m: number) => {
-//     const productPriceWithSale = productPrice * (1 - acquireSale);
-
-//     const f = (((1.404 * avgSalary * (7 + Math.floor(m / 100))) / m +
-//     (warehouseSpace * warehouseSpaceCost * distanceFromCity) / m +
-//     (2+conversion) * deliveryCostAvg * deliveryPercent +
-//     productPriceWithSale / (12 * periodValuableUsage) +
-//     productPriceWithSale * wearTearMulti * stealProbability+marketing) *
-//     (overheadCosts + 1) )
-//     return (
-//        (f * (1+
-//         upTestDrive) +
-//         //(productPrice - f) * conversion) +
-//         (deliveryPercent*deliveryCostAvg*upDelivery*(2)))
-
-//     );
-//   };
-// };
 
 export const totalCostsForOneDealFunction = (params: FunctionParameters) => {
   return (m: number) => {
@@ -253,5 +121,25 @@ export const profitFunction = (params: FunctionParameters) => {
     const profitByRent =
       incomeFunction(params)(m) - totalCostsFunction(params)(m);
     return profitByRent;
+  };
+};
+
+export const partnerIncomeFunction = (params: FunctionParameters) => {
+  const {
+    prtTestDrive,
+    averageCost,
+    conversion,
+    ourSale,
+    productPrice,
+    acquireSale,
+  } = params;
+  return (m: number) => {
+    const profitByTestDrive = prtTestDrive * averageCost * m;
+    const profitBySale =
+      (productPrice * (1 - acquireSale) +
+        productPrice * acquireSale * (1 - ourSale)) *
+      m *
+      conversion;
+    return profitBySale + profitByTestDrive;
   };
 };
